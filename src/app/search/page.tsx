@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import CharacterCard from '@/components/CharacterCard';
@@ -11,7 +11,8 @@ import Pagination from '@/components/Pagination';
 import { searchAllContent } from '@/services/api';
 import type { Character, Location, Episode } from '@/services/api';
 
-export default function SearchPage() {
+// Create a SearchContent component that uses useSearchParams
+function SearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryParam = searchParams.get('query') || '';
@@ -181,5 +182,14 @@ export default function SearchPage() {
         </>
       )}
     </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SearchContent />
+    </Suspense>
   );
 } 
