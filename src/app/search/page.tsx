@@ -11,6 +11,15 @@ import Pagination from '@/components/Pagination';
 import { searchAllContent } from '@/services/api';
 import type { Character, Location, Episode } from '@/services/api';
 
+// Main page component with Suspense boundary
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SearchContent />
+    </Suspense>
+  );
+}
+
 // Create a SearchContent component that uses useSearchParams
 function SearchContent() {
   const router = useRouter();
@@ -182,14 +191,5 @@ function SearchContent() {
         </>
       )}
     </div>
-  );
-}
-
-// Main page component with Suspense boundary
-export default function SearchPage() {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <SearchContent />
-    </Suspense>
   );
 } 
