@@ -1,26 +1,252 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Rick and Morty theme colors - updated palette */
+  --rickGreen: #526E2DFF;
+  --rickBlue: #24325FFF;
+  --rickTeal: #A6EEE6FF;
+  --mortyYellow: #FAFD7CFF;
+  --portalGreen: #39FF14;
+  --darkPortal: #82491EFF;
+  --schwiftyPink: #E762D7FF;
+  --spaceBg: #1a1d29;
+  --rickMortyRed: #E1282E; /* New: Rick and Morty red from the image */
+  
+  /* Additional colors from the palette */
+  --brightRed: #FB6467FF;
+  --paleYellow: #FAE48BFF;
+  --brightOrange: #E89242FF;
+  --lightBlue: #B7E4F9FF;
+  --mediumBrown: #917C5DFF;
+  --aquaMint: #69C8ECFF;
+  
+  /* shadcn color system - aligned to Rick and Morty red theme */
+  --background: 222 20% 18%;
+  --foreground: 210 40% 98%;
+  --card: 222 16% 22%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 25% 20%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 358 83% 52%;  /* Rick and Morty red */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 235 60% 40%;  /* Rick blue */
+  --secondary-foreground: 210 40% 98%;
+  --muted: 222 20% 24%;
+  --muted-foreground: 210 40% 80%;
+  --accent: 358 83% 52%;  /* Accent using red */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 358 83% 52%;  /* Rick and Morty red */
+  --destructive-foreground: 0 0% 100%;
+  --border: 222 25% 30%;
+  --input: 222 25% 30%;
+  --ring: 358 83% 52%;
+  --radius: 0.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: 222 20% 18%;
+  --foreground: 210 40% 98%;
+  --card: 222 16% 22%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 25% 20%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 358 83% 52%;  /* Rick and Morty red */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 235 60% 40%;  /* Rick blue */
+  --secondary-foreground: 210 40% 98%;
+  --muted: 222 20% 24%;
+  --muted-foreground: 210 40% 80%;
+  --accent: 358 83% 52%;  /* Accent using red */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 358 83% 52%;  /* Rick and Morty red */
+  --destructive-foreground: 0 0% 100%;
+  --border: 222 25% 30%;
+  --input: 222 25% 30%;
+  --ring: 358 83% 52%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(rgba(225, 40, 46, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  
+  a {
+    @apply text-rickMortyRed transition-colors duration-150;
+  }
+  
+  a:hover {
+    @apply text-white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-rickMortyRed;
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+  
+  button {
+    @apply transition-all duration-200;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .card {
+    @apply bg-card/90 rounded-lg shadow-md transition-shadow duration-300 border border-border hover:shadow-lg;
+  }
+  
+  .btn-primary {
+    @apply px-4 py-2 rounded-md bg-rickMortyRed text-white font-medium hover:opacity-90 transition-opacity;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 rounded-md bg-rickBlue bg-opacity-80 border border-rickMortyRed border-opacity-30 text-white font-medium hover:bg-rickBlue hover:border-rickMortyRed hover:border-opacity-50 transition-colors;
+  }
+
+  .btn-outline {
+    @apply px-4 py-2 rounded-md bg-transparent border border-rickMortyRed text-rickMortyRed font-medium hover:bg-rickMortyRed hover:bg-opacity-10 transition-colors;
+  }
+  
+  .btn-accent {
+    @apply px-4 py-2 rounded-md bg-gradient-to-r from-rickMortyRed to-brightRed bg-opacity-80 text-white font-medium hover:opacity-90 transition-opacity;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-green {
+    background-color: rgba(105, 200, 236, 0.2);
+    @apply text-aquaMint;
+  }
+  
+  .badge-blue {
+    background-color: rgba(183, 228, 249, 0.2);
+    @apply text-lightBlue;
+  }
+
+  .badge-yellow {
+    background-color: rgba(250, 228, 139, 0.2);
+    @apply text-paleYellow;
+  }
+  
+  .badge-red {
+    background-color: rgba(225, 40, 46, 0.2);
+    @apply text-rickMortyRed;
+  }
+  
+  .input {
+    @apply px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-rickMortyRed bg-muted text-foreground;
+  }
+
+  .portal-gradient {
+    @apply bg-gradient-to-r from-rickBlue to-rickMortyRed text-white;
+  }
+
+  .rick-gradient {
+    @apply bg-gradient-to-r from-rickBlue to-rickMortyRed bg-opacity-80 text-white;
+  }
+
+  .episode-gradient {
+    @apply bg-gradient-to-r from-rickMortyRed to-brightRed bg-opacity-80 text-white;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 8px var(--rickMortyRed), 0 0 15px var(--brightRed);
+  }
+
+  .section {
+    @apply py-8 px-4 sm:px-6 lg:px-8 rounded-xl;
+  }
+
+  /* Grid layouts */
+  .grid-cards {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+  }
+
+  /* Status indicators */
+  .status-alive {
+    @apply bg-rickMortyRed;
+  }
+  
+  .status-dead {
+    @apply bg-brightRed bg-opacity-80;
+  }
+  
+  .status-unknown {
+    @apply bg-mediumBrown bg-opacity-80;
+  }
+
+  /* Animations */
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-102;
+  }
+}
+
+/* Custom utility classes for Rick and Morty theme */
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 8px var(--rickMortyRed), 0 0 15px var(--brightRed);
+  }
+  
+  .text-red-glow {
+    text-shadow: 0 0 8px var(--rickMortyRed), 0 0 15px var(--brightRed);
+  }
+  
+  .text-blue-glow {
+    text-shadow: 0 0 8px var(--lightBlue), 0 0 15px var(--aquaMint);
+  }
+  
+  .text-yellow-glow {
+    text-shadow: 0 0 8px var(--paleYellow), 0 0 15px var(--brightOrange);
+  }
+  
+  .rick-shadow {
+    box-shadow: 0 4px 12px rgba(225, 40, 46, 0.3);
+  }
+  
+  .portal-shadow {
+    box-shadow: 0 4px 12px rgba(183, 228, 249, 0.3);
+  }
+  
+  .character-gradient {
+    background: linear-gradient(135deg, rgba(145, 124, 93, 0.9), rgba(225, 40, 46, 0.9));
+    color: white;
+  }
+  
+  .location-gradient {
+    background: linear-gradient(135deg, rgba(225, 40, 46, 0.9), rgba(36, 50, 95, 0.9));
+    color: white;
+  }
+  
+  .schwifty-gradient {
+    background: linear-gradient(135deg, rgba(36, 50, 95, 0.9), rgba(225, 40, 46, 0.8));
+    color: white;
+  }
+  
+  .hero-gradient {
+    background: linear-gradient(135deg, rgba(225, 40, 46, 0.9), rgba(36, 50, 95, 0.7));
+    color: white;
+  }
+  
+  .rick-morty-bg {
+    background-color: var(--rickMortyRed);
+  }
 }
